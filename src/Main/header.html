@@ -16,21 +16,19 @@
                 <li ui-sref-active="active"><a ui-sref="about"><span class="glyphicon glyphicon-blackboard"></span> About</a></li>
                 
                   <li class="dropdown" ng-show="isAuthenticated()">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Channels <span class="caret"></span></a>
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-bullhorn"></span> Channels <span class="caret"></span></a>
                       <ul class="dropdown-menu" role="menu">
-                        <li ui-sref-active="active"><a ui-sref="about"> Subscribed</a></li>
-                        <li class="divider"></li>
-                        <li ui-sref-active="active"><a ui-sref="about"> My Channels</a></li>
+                        <li ui-sref-active="active"><a ui-sref="subscriptions"> <span class="glyphicon glyphicon-cloud"></span> Subscriptions</a></li>
+                        <li ui-sref-active="active"><a ui-sref="mychannels"> <span class="glyphicon glyphicon-pencil"></span> My Channels</a></li>
                       </ul>
                   </li>
                  
                  
                 <li class="dropdown" ng-show="isAuthenticated()">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Contents <span class="caret"></span></a>
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-book"></span> Contents <span class="caret"></span></a>
                       <ul class="dropdown-menu" role="menu">
-                        <li ui-sref-active="active"><a ui-sref="about"> Publish</a></li>
-                        <li class="divider"></li>
-                        <li ui-sref-active="active"><a ui-sref="about"> Dashboard</a></li>
+                        <li ui-sref-active="active"><a ui-sref="about"> <span class="glyphicon glyphicon-comment"></span> Publish</a></li>
+                        <li ui-sref-active="active"><a ui-sref="about"> <span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
                       </ul>
                   </li>
                  
