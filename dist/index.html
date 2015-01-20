@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--base href="/"-->
+        <script type="text/javascript"> 
+            var head = document.getElementsByTagName('head')[0]; //get the head-Element
+            var script = document.createElement('script'); //Create a script-element
+            script.setAttribute('type', 'text/javascript'); //Set an attribute
+            var base = document.createElement('base'); //Create a base-element
+            base.setAttribute('href', document.location); //Set an attribute
+            script.appendChild(base); //Append the base-element to the script-element
+            head.appendChild(script); 
+        </script>  
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="style/animate.css">
+
+        <title>Ipsum Project</title>
+        <link rel="icon" type="image/png" href="img/icon.png">
+        
+    </head>
+    <body ng-app="IpsumFE">
+      
+        <div class="container" ng-cloak>
+             <div id="navbar" ng-controller="headerCtrl" class="header" ng-init="logged=false">
+                <div ng-include src="'Main/header.html'"></div>
+             </div>
+
+            <div class="row">
+              <div class="ui-view-container">
+                  <div ui-view><!-- Add your site or  content here --></div>
+                  <div class="alert alert-{{alert.type}} animated main-alert" ng-class="{'flipInY':alert.show, 'flipOutY':!alert.show, 'alert-hidden':!alert.hasBeenShow}">    
+                    <strong>{{alert.title}}</strong>{{alert.message}}
+                  </div>
+              </div>
+            </div>
+
+            <div class="footer">
+                <br>
+                <hr>
+                <p>Ipsum Project</p>
+            </div>
+        </div>  
+
+         <!-- Scripts -->   
+         <script type="text/javascript"> document.write("<base href='http://" + document.location.host + "' />"); </script>     
+         <script src="node_modules/jquery/dist/jquery.min.js"></script>
+         <script src="lib/bootstrap/js/bootstrap.min.js"></script>  
+
+         <!-- Angular -->
+         <script src="node_modules/angular/angular.js"></script>
+         <script src="node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+
+         <!-- Auth Module -->
+         <script src="Auth/auth.module.js"></script>
+         <script src="Auth/auth.config.js"></script>
+         <script src="Auth/services/authtoken.js"></script>
+         <script src="Auth/services/alert.js"></script>
+         <script src="Auth/controllers/login.js"></script>
+         <script src="Auth/controllers/logout.js"></script>
+
+         <!-- Admin Module -->
+         <script src="Admin/admin.module.js"></script>
+         <script src="Admin/admin.config.js"></script>
+
+        
+         <!-- App/Main Module -->
+         <script src="app.js"></script>
+         <script src="app.config.js"></script>
+         <script src="Main/headerCtrl.js"></script>
+
+    </body>
+</html>
