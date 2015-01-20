@@ -1,0 +1,58 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button>
+      <a ui-sref="home" class="navbar-brand"> Ipsum Project</a>
+    </div>
+    
+      <div class="collapse navbar-collapse" id="myNavbar">
+
+             <ul class="nav navbar-nav">
+                <li ui-sref-active="active"><a ui-sref="about"><span class="glyphicon glyphicon-blackboard"></span> About</a></li>
+                
+                  <li class="dropdown" ng-show="isAuthenticated()">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-bullhorn"></span> Channels <span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li ui-sref-active="active"><a ui-sref="subscriptions"> <span class="glyphicon glyphicon-cloud"></span> Subscriptions</a></li>
+                        <li ui-sref-active="active"><a ui-sref="mychannels"> <span class="glyphicon glyphicon-pencil"></span> My Channels</a></li>
+                      </ul>
+                  </li>
+                 
+                 
+                <li class="dropdown" ng-show="isAuthenticated()">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-book"></span> Contents <span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li ui-sref-active="active"><a ui-sref="about"> <span class="glyphicon glyphicon-comment"></span> Publish</a></li>
+                        <li ui-sref-active="active"><a ui-sref="about"> <span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+                      </ul>
+                  </li>
+                 
+                 
+
+                <li ng-show="isAuthenticated()" ui-sref-active="active"><a ui-sref="admin"><span class="glyphicon glyphicon-cog"></span> Admin</a></li>
+              </ul>
+
+              <ul class="nav navbar-nav navbar-right">
+                  <li ng-hide="isAuthenticated()" ui-sref-active="active"><a ui-sref="register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                  <li ng-hide="isAuthenticated()" ui-sref-active="active"><a ui-sref="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                  <li class="dropdown" ng-show="isAuthenticated()">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-folder-open"></span> My Account<span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li ui-sref-active="active"><a ui-sref="accountsettings"><span class="glyphicon glyphicon-wrench"></span> Settings</a></li>
+                        <li class="divider"></li>
+                        <li ui-sref-active="active"><a ui-sref="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                      </ul>
+                  </li>
+              </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
