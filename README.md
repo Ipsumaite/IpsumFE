@@ -1,4 +1,23 @@
+Travis CI - 
+
+# Ipsum Project FE
+
+Ipsum Project Front End
+
+###Installation
+Install node.js first then go to your github clone and
+``` shell
+ npm install
+```
 
 
-# Front End template
-## Web Front End
+###For starting a local server:
+``` shell
+$ grunt server
+```
+
+Watch and livereload tasks configured in grunt
+
+###
+
+
