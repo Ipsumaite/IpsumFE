@@ -1,4 +1,4 @@
-Travis CI - 
+Travis CI - [![Build Status](https://travis-ci.org/Ipsumaite/IpsumFE.svg)](https://travis-ci.org/Ipsumaite/IpsumFE)
 
 # Ipsum Project FE
 
