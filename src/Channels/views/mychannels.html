@@ -1,4 +1,109 @@
-  <div class="jumbotron">
-    <h1>My channels Page</h1>
-    <p><span class="label label-default">Your authored Channels</span></p> 
-  </div>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<h3>My channels	</h3>
+			<table class="table table-condensed table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>Name</th><th>Description</th><th>Type</th><th>Created At</th><th>Options</th>
+					</tr>
+				</thead>
+				<tbody>
+                     <tr ng-repeat="channel in channels">
+                        <td>{{channel.Name}}</td>
+                        <td>{{channel.Description}}</td>
+                        <td>{{channel.Type}}</td>
+                        <td>{{channel.CreatedAt}}</td>
+                        <td>    
+                            <button id="modal-14558{{channel.id}}" href="#modal-container-14558{{channel.id}}" role="button" class="btn btn-xs btn-info" data-toggle="modal">Detail</button>
+
+                                        <div class="modal fade" id="modal-container-14558{{channel.id}}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                        <h4 class="modal-title" id="myModalLabel">
+                                                            {{channel.Name}} - Details
+                                                        </h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        {{channel.Detail}}
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+ 
+                            <button id="disable" name="disable" class="btn btn-xs btn-inverse">Disable</button>
+                            <button id="delete" name="delete" class="btn btn-xs btn-danger">Delete!</button>
+                        </td>
+                     </tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+    
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			 <a id="modal-145571" href="#modal-container-145571" role="button" class="btn btn-primary" data-toggle="modal">Launch New Channel</a>
+			
+			<div class="modal fade" id="modal-container-145571" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title" id="myModalLabel">
+								New Channel
+							</h4>
+						</div>
+						<div class="modal-body">
+							<form class="form-horizontal">
+                            <fieldset>
+                            <!-- Text input-->
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="name">Channel Name</label>  
+                              <div class="col-md-4">
+                              <input id="name" name="name" type="text" placeholder="TV Myself" class="form-control input-md" required="">
+
+                              </div>
+                            </div>
+
+                            <!-- Select Basic -->
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="channeltype">Select Type</label>
+                              <div class="col-md-4">
+                                <select id="channeltype" name="channeltype" class="form-control">
+                                  <option value="1">Free</option>
+                                  <option value="2">Premium</option>
+                                </select>
+                              </div>
+                            </div>
+
+                            <!-- Textarea -->
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="description">Description</label>
+                              <div class="col-md-4">                     
+                                <textarea class="form-control" id="description" name="description"></textarea>
+                              </div>
+                            </div>
+
+                            </fieldset>
+                            </form>
+
+						</div>
+						<div class="modal-footer">
+							 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary">Save changes</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+</div>

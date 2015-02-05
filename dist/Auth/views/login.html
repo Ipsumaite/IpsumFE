@@ -1,9 +1,38 @@
-  <div class="jumbotron">
-    <h2>Login Form</h2>
-    <p ng-hide="authenticated">User is not authenticated</p>
-    <p ng-show="authenticated">User is authenticated</p> 
-    <hr>
-    <button ng-click="Authenticate()">
-        Login
-    </button>
+  <div class="col-sm-6 col-md-8">
+     <form class="form-horizontal" ng-submit="Authenticate()">
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend>Login</legend>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="email">Email</label>  
+              <div class="col-md-5">
+              <input id="email" name="email" type="text" placeholder="john.smith@mail.com" class="form-control input-md" required="">
+
+              </div>
+            </div>
+
+            <!-- Password input-->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="password">Password</label>
+              <div class="col-md-5">
+                <input id="password" name="password" type="password" placeholder="Password (from 8 to 15 char)" class="form-control input-md" maxlength="15" required="">
+                <p class="help-block" ng-show="register.password_confirm.$dirty && register.password_confirm.$invalid">Please match the passwords</p>
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="nextbutton"></label>
+              <div class="col-md-5">
+                <button id="nextbutton" name="nextbutton" class="btn btn-primary" type="submit">Login</button>
+                <a class="text muted pull-right" ui-sref="register">Create account</a>
+              </div>
+            </div>
+
+        </fieldset>
+       
+    </form>
   </div>

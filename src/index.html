@@ -16,6 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="style/animate.css">
+        <link rel="stylesheet" href="style/leaflet.css">
 
         <title>Ipsum Project</title>
         <link rel="icon" type="image/png" href="img/icon.png">
@@ -48,10 +49,13 @@
          <script type="text/javascript"> document.write("<base href='http://" + document.location.host + "' />"); </script>     
          <script src="node_modules/jquery/dist/jquery.min.js"></script>
          <script src="lib/bootstrap/js/bootstrap.min.js"></script>  
+         <script src="lib/leaflet.js"></script>
 
+        
          <!-- Angular -->
          <script src="node_modules/angular/angular.js"></script>
          <script src="node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+         <script src="lib/angular-leaflet-directive.min.js"></script>
 
          <!-- Auth Module -->
          <script src="Auth/auth.module.js"></script>
@@ -60,12 +64,20 @@
          <script src="Auth/services/alert.js"></script>
          <script src="Auth/controllers/loginCtrl.js"></script>
          <script src="Auth/controllers/logoutCtrl.js"></script>
+         <script src="Auth/controllers/registerCtrl.js"></script>
 
-         <!-- Auth Module -->
+         <!-- Channels Module -->
          <script src="Channels/channels.module.js"></script>
          <script src="Channels/channels.config.js"></script>
          <script src="Channels/controllers/mychannelsCtrl.js"></script>
          <script src="Channels/controllers/subscriptionsCtrl.js"></script>
+        
+        
+         <!-- Contents Module -->
+         <script src="Contents/contents.module.js"></script>
+         <script src="Contents/contents.config.js"></script>
+         <script src="Contents/controllers/publishCtrl.js"></script>
+         <script src="Contents/controllers/dashboardCtrl.js"></script>
         
 
          <!-- Admin Module -->

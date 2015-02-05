@@ -5,7 +5,8 @@
 
     $scope.Authenticate = function(){
         $rootScope.authenticated=true;
-         authtoken.setData(true);
-         alert('success', 'Hi!', 'Welcome back user 1');
+        authtoken.setData(true);
+        alert('success', 'Hi!', 'Welcome back user 1');
+        $state.go('home');
     };
   });

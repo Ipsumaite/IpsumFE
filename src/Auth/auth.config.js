@@ -5,7 +5,8 @@ angular.module('IpsumFE.Auth').config(function ($stateProvider, $urlRouterProvid
     $stateProvider
     .state('register', {
             templateUrl: 'Auth/views/register.html',
-            url: '/register'
+            url: '/register',
+            controller: 'registerCtrl'
     })
     .state('login', {
             templateUrl: 'Auth/views/login.html',
