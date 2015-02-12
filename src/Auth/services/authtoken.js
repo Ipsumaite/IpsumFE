@@ -1,30 +1,37 @@
 'use strict';
 
-angular.module('IpsumFE.Auth').factory('authtoken', function($window, $rootScope){
- var valtmp=false;
+angular.module('IpsumFE.Auth').factory('authtoken', function ($window) {
 
+    var storage = $window.localStorage;
+    var cachedToken;
+    var userToken;
+    var dateToken;
     
- angular.element($window).on('storage', function(event) {
-    if (event.key === 'my-storage') {
-      $rootScope.$apply();
-      this.valtmp = getData();
-    }
+    // Public API here
+    var authtoken =  {
+      setToken: function (token) {
+        cachedToken=token;
+        storage.setItem(userToken, token);
+        storage.setItem(dateToken, new Date().toISOString());
+      },
+      getToken: function(){
+         if (!cachedToken)
+             cachedToken = storage.getItem(userToken);
+         return cachedToken;
+      },
+      getTokenDate: function(){
+         return storage.getItem(dateToken);
+      },
+      isAuthenticated: function(){
+        return !!authtoken.getToken();           
+      },
+      removeToken: function(){
+        cachedToken = null;
+        storage.removeItem(userToken);
+        storage.removeItem(dateToken);
+      }
+    };
+    
+    return authtoken;
+    
   });
-  return {
-    setData: function(val) {
-      $window.localStorage && $window.localStorage.setItem('my-storage', val);
-       
-      return this;
-    },
-    getData: function() {
-      return $window.localStorage && $window.localStorage.getItem('my-storage');
-    },
-    removeData: function() {
-      $window.localStorage && $window.localStorage.removeItem('my-storage');
-       
-      return this;
-    }
-  };
-    
-});
-    

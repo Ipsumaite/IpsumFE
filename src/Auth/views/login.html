@@ -1,5 +1,5 @@
   <div class="col-sm-6 col-md-8">
-     <form class="form-horizontal" ng-submit="Authenticate()">
+     <form class="form-signin" name="login" ng-submit="Authenticate()">
         <fieldset>
 
             <!-- Form Name -->
@@ -9,17 +9,16 @@
             <div class="form-group">
               <label class="col-md-4 control-label" for="email">Email</label>  
               <div class="col-md-5">
-              <input id="email" name="email" type="text" placeholder="john.smith@mail.com" class="form-control input-md" required="">
-
+              <input id="email" name="email" ng-model="email" type="email" placeholder="john.smith@mail.com" class="form-control input-md" required="">
+               <p class="help-block" ng-show="login.email.$dirty && login.email.$invalid">Please enter a proper email</p>
               </div>
             </div>
 
             <!-- Password input-->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="password">Password</label>
+              <label class="col-md-4 control-label"  for="password">Password</label>
               <div class="col-md-5">
-                <input id="password" name="password" type="password" placeholder="Password (from 8 to 15 char)" class="form-control input-md" maxlength="15" required="">
-                <p class="help-block" ng-show="register.password_confirm.$dirty && register.password_confirm.$invalid">Please match the passwords</p>
+                <input id="password" ng-model="password" name="password" type="password" placeholder="Password (from 8 to 15 char)" class="form-control input-md" maxlength="15" required="">
               </div>
             </div>
 
@@ -27,7 +26,7 @@
             <div class="form-group">
               <label class="col-md-4 control-label" for="nextbutton"></label>
               <div class="col-md-5">
-                <button id="nextbutton" name="nextbutton" class="btn btn-primary" type="submit">Login</button>
+                <button id="nextbutton"  ng-model="submit" ng-disabled="!formValidated || login.email.$invalid" name="loginButton" class="btn btn-primary" type="submit">Login</button>
                 <a class="text muted pull-right" ui-sref="register">Create account</a>
               </div>
             </div>

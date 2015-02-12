@@ -5,7 +5,8 @@ angular.module('IpsumFE').config(function ($stateProvider, $urlRouterProvider, $
     $stateProvider
     .state('home', {
             templateUrl: 'Main/home.html',
-            url: '/'
+            url: '/',
+            controller: 'homeCtrl'
     })
     .state('about', {
             templateUrl: 'Main/about.html',
@@ -27,4 +28,6 @@ angular.module('IpsumFE').config(function ($stateProvider, $urlRouterProvider, $
             return true;
     });
     $locationProvider.html5Mode(true);
-});
+})
+.constant('API_URL', 'http://ipsumapi.herokuapp.com/')
+.constant('API_SECURED_URL', 'http://ipsumapi.herokuapp.com/api/');

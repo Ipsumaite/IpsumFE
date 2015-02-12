@@ -1,12 +1,60 @@
 'use strict';
 
 
-  angular.module('IpsumFE.Auth').controller('loginCtrl', function ($scope, authtoken,$rootScope,$state, alert) {
+  angular.module('IpsumFE.Auth').controller('loginCtrl', function ($scope, authtoken,$rootScope,$state, alert, initSet, $http, API_URL) {
 
+    $scope.email="";
+    $scope.password="";
+    $scope.formValidated=false;
+      
     $scope.Authenticate = function(){
-        $rootScope.authenticated=true;
-        authtoken.setData(true);
-        alert('success', 'Hi!', 'Welcome back user 1');
-        $state.go('home');
-    };
+
+        var user ={
+            email: $scope.email,
+            password: $scope.password
+        };
+        
+        $http.post(API_URL +"login", user)
+        .success(function(res){
+                alert('success', 'Hi',' welcome back ' + res.email +  '!');
+                authtoken.setToken(res.token);
+                initSet.authenticated = true;
+                initSet.email = res.email;
+                initSet.timestamp = new Date();
+                $state.go('home');
+                
+        })
+        .error(function(data, status, headers, config){
+            alert('warning', 'Opps!', data);
+        });
+        
+     };
+        
+        
+
+    
+      
+    $scope.$watch('password', function(newval) {
+        // do something here
+        if (newval!= undefined){
+            if (newval.length > 7 && $scope.email.length>2){
+                $scope.formValidated=true;
+            }else{
+                $scope.formValidated=false;
+            }
+        }
+    });
+    
+    $scope.$watch('email', function(newval) {
+        // do something here
+        if (newval!= undefined){
+            if (newval.length > 2 && $scope.password.length>7){
+                $scope.formValidated=true;
+            }else{
+                $scope.formValidated=false;
+            }
+        }
+    });
+         
+      
   });

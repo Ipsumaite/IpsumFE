@@ -1,12 +1,11 @@
 'use strict';
 
 
-  angular.module('IpsumFE.Auth').controller('logoutCtrl', function ($scope, authtoken,$rootScope,$state, alert) {
+  angular.module('IpsumFE.Auth').controller('logoutCtrl', function ($scope, authtoken,$rootScope,$state, alert, initSet) {
   
-      $rootScope.authenticated=false;
-      authtoken.setData(false);
-      authtoken.removeData();
-      alert('default', 'Good bye!', 'See you later user 1');
+ 
+      authtoken.removeToken();
+      alert('default', 'Good bye!', 'See you later '+ initSet.email);
       $state.go('home');
      
   });
