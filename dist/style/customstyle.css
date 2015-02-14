@@ -1,0 +1,12 @@
+.container {
+    width: 95%;
+}
+
+.main-alert {
+    max-width:400px;
+    margin: 0 auto;
+}
+
+.alert-hidden {
+    visibility: hidden;
+}
