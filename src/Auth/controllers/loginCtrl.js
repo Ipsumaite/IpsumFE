@@ -16,10 +16,12 @@
         
         $http.post(API_URL +"login", user)
         .success(function(res){
-                alert('success', 'Hi',' welcome back ' + res.email +  '!');
+                alert('success', 'Hi',' welcome back '+ res.firstname + ' ' + res.lastname +  '!');
                 authtoken.setToken(res.token);
                 initSet.authenticated = true;
                 initSet.email = res.email;
+                initSet.firstname = res.firstname;
+                initSet.lastname = res.lastname;
                 initSet.timestamp = new Date();
                 $state.go('home');
                 

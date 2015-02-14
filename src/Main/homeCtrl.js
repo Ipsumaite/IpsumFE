@@ -10,8 +10,7 @@ angular.module('IpsumFE').controller('homeCtrl', function ($scope, authtoken, $r
      var tgap = (t1.getTime()-t2.getTime())/(60*1000);
     
      if (authtoken.isAuthenticated() && false == initSet.authenticated && tgap >= initSet.sessionTimeout){
-         authtoken.removeData();
-         console.log("Test");
+         authtoken.removeToken();
      }
     
 });

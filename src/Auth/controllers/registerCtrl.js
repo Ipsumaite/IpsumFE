@@ -1,7 +1,7 @@
 'use strict';
 
 
-  angular.module('IpsumFE.Auth').controller('registerCtrl', function ($scope, authtoken, alert) {
+  angular.module('IpsumFE.Auth').controller('registerCtrl', function ($scope, authtoken, alert, initSet, $state, $http, API_URL) {
 
     $scope.stage1=false;
     $scope.email="";
@@ -23,8 +23,31 @@
         $scope.stage1=false;
     };
 
-    $scope.register = function(){
-        console.log("Registering");
+    $scope.signup = function(){
+        
+          var struser= "{\"firstname\":\""+ $scope.firstname +"\", \"lastname\":\"" + $scope.lastname + "\", \"phone\":\"" + $scope.phone + "\", \"address\":\""+$scope.address+"\"}";
+        
+          var user ={
+            email: $scope.email,
+            password: $scope.password,
+            user: struser
+          };
+        
+        $http.post(API_URL +"signup", user)
+        .success(function(res){
+                alert('success', 'Hi',' welcome ' + res.firstname + ' ' + res.lastname + '!');
+                authtoken.setToken(res.token);
+                initSet.authenticated = true;
+                initSet.email = res.email;
+                initSet.firstname = res.firstname;
+                initSet.lastname = res.lastname;
+                initSet.timestamp = new Date();
+                $state.go('home');
+                
+        })
+        .error(function(data, status, headers, config){
+            alert('warning', 'Opps!', data);
+        });
     };
     
     $scope.checkPass = function(){

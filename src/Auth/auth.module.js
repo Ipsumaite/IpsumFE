@@ -8,6 +8,8 @@ var IpsumFEAuth = angular.module('IpsumFE.Auth', ['ui.router', ])
     authenticated: false,
     timestamp: new Date(),
     email: '',
+    firstname: '',
+    lastname: '',
     sessionTimeout: 5 // 5 min is the maximum it can handle to reenter
 });
 
