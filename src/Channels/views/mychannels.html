@@ -28,6 +28,7 @@
                                             <div class="form-group">
                                                 <label class="control-label" for="name">Channel Name</label>
                                                 <input  ng-model="newchannel.Name"  type="text" placeholder="TV Myself (Length>4)" class="form-control input-md" required>
+                                                <label ng-show="repeatedname"><span class="label label-default">You already have a channel with this name, please choose another name</span></label>
                                             </div>
 
                                             <!-- Select Basic -->
@@ -75,25 +76,47 @@
                                     <button type="button" class="btn btn-warning" ng-click="launchChannel()" ng-disabled="!NewChannelFormValid" data-dismiss="modal">Launch it!</button>
                                 </div>
                             </form>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
 
+            <div class="modal fade" id="modal-delete" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">
+								Delete Channel {{confirmName}} ?
+							</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" name="delchannel">
+                                    <div class="row">
+                                        <h5>Description</h5>
+                                        <p>{{confirmDescription}}</p>
+                                        
+                                    </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-danger" ng-click="confirmdeleteChannel(idtoremove)"  data-dismiss="modal"><span class="glyphicon glyphicon-trash"></span> Confirm</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
-</div>
-
 <br/>
 
 <div class="col-lg-12 col-md-8">
     <div class="row">
-        <div class="col-md-4" ng-repeat="channel in channels track by $index| filter:channelnameflt">
-            <div class="panel panel-default">
+        <div class="col-md-4" ng-repeat="channel in channels | filter:channelnameflt">
+            <div class="panel panel-default animated"  ng-class="{'rotateIn':!channel.isDeleted, 'hinge':channel.isDeleted}">
                 <div class="panel-heading">
                     <div class="panel-title"> {{channel.Name}}
                         <span class="badge"> {{channel.Contents}}</span>
@@ -108,7 +131,13 @@
                     <button ng-show="channel.Active" id="disable" name="disable" class="btn btn-xs btn-inverse" ng-click="changeActive(channel.id)"><span class="glyphicon glyphicon-ban-circle"></span> Disable</button>
                     <button ng-show="!channel.Active" id="enable" name="enable" class="btn btn-xs btn-success" ng-click="changeActive(channel.id)"><span class="glyphicon glyphicon-ok-circle"></span> Activate</button>
 
-                    <button id="delete" name="delete" class="btn btn-xs btn-danger" ng-click="deleteChannel(channel.id)"> <span class="glyphicon glyphicon-trash"></span> Delete!</button>
+<!--                    <button id="delete" name="delete" ng-disabled="isremoving" class="btn btn-xs btn-danger" ng-click="deleteChannel(channel.id)"> <span class="glyphicon glyphicon-trash"></span> Delete!</button>
+                    -->
+                    
+                    <a  href="#modal-delete" ng-disabled="isremoving" role="button" ng-click="deleteChannel(channel.id)" class="btn btn-xs btn-danger" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span> Delete!</a>
+                    
+                    
+                    
                     <label for="checkboxes-0" class="label label-primary pull-right">
                         <span>Visible </span>
                         <input type="checkbox" name="checkboxes" value="Visible" ng-model="channel.Visible">
@@ -118,4 +147,7 @@
         </div>
 
     </div>
+</div>
+    
+    
 </div>

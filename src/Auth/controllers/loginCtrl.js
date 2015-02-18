@@ -13,6 +13,7 @@
             email: $scope.email,
             password: $scope.password
         };
+       alert('info', 'Trying to signin',' just wait a few moments please. ');
         
         $http.post(API_URL +"login", user)
         .success(function(res){

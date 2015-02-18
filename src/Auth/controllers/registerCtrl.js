@@ -33,6 +33,7 @@
             user: struser
           };
         
+        alert('info', 'Trying to signup',' just wait a few moments please. ');
         $http.post(API_URL +"signup", user)
         .success(function(res){
                 alert('success', 'Hi',' welcome ' + res.firstname + ' ' + res.lastname + '!');
@@ -42,7 +43,7 @@
                 initSet.firstname = res.firstname;
                 initSet.lastname = res.lastname;
                 initSet.timestamp = new Date();
-                $state.go('home');
+                $state.go('mychannels');
                 
         })
         .error(function(data, status, headers, config){
