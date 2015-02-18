@@ -116,7 +116,7 @@
 <div class="col-lg-12 col-md-8">
     <div class="row">
         <div class="col-md-4" ng-repeat="channel in channels | filter:channelnameflt">
-            <div class="panel panel-default animated"  ng-class="{'rotateIn':!channel.isDeleted, 'hinge':channel.isDeleted}">
+            <div class="panel panel-default animated"  ng-class="{'lightSpeedIn':!channel.isDeleted, 'hinge':channel.isDeleted}">
                 <div class="panel-heading">
                     <div class="panel-title"> {{channel.Name}}
                         <span class="badge"> {{channel.Contents}}</span>
