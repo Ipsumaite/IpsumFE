@@ -1,0 +1,153 @@
+<div class="container">
+
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" ng-model="channelnameflt.Name" class="form-control" placeholder="Search for channel name...">
+                </div>
+                <a id="modal-145571" ng-click="resetChannelForm()" href="#modal-container-145571" role="button" class="btn btn-warning" data-toggle="modal">Launch New Channel</a>
+            </form>
+
+            <div class="modal fade" id="modal-container-145571" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">
+								New Channel
+							</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" name="newchannel">
+                                    <div class="row">
+
+                                        <div class="col-xs-6">
+                                            <!-- Text input-->
+                                            <div class="form-group">
+                                                <label class="control-label" for="name">Channel Name</label>
+                                                <input  ng-model="newchannel.Name"  type="text" placeholder="TV Myself (Length>4)" class="form-control input-md" required>
+                                                <label ng-show="repeatedname"><span class="label label-default">You already have a channel with this name, please choose another name</span></label>
+                                            </div>
+
+                                            <!-- Select Basic -->
+                                            <div class="form-group">
+                                                <label class="control-label" for="channeltype">Select Type</label>
+                                                <select data-ng-model="FormSelectType" class="col-xs-3 form-control"
+                                                        data-ng-options="ch.type as ch.desctype for ch in FormchannelType"> </select>
+                                            </div>
+
+                                            <!-- Textarea -->
+                                            <div class="form-group">
+                                                <label class="control-label" for="description">Description</label>
+                                                <textarea class="form-control" ng-model="newchannel.Description"  required></textarea>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <!-- Select Basic -->
+                                            <div class="form-group">
+                                                <label class="col-xs-6 control-label" for="channeltype">Status</label>
+                                                <select data-ng-model="FormSelectActive" class="col-xs-3 form-control"
+                                                        data-ng-options="ch.value as ch.label for ch in FormchannelActive"> </select>
+                                            </div>
+
+                                            <!-- Multiple Radios -->
+                                            <div class="form-group">
+                                                <label class="col-xs-6 control-label" for="radios">Visible</label>
+                                                <div class="col-xs-3 radio">
+                                                    <label for="radios-0">
+                                                        <input type="radio" ng-model="FormVisible"  value="true"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="col-xs-3 radio">
+                                                    <label for="radios-1">
+                                                        <input type="radio" ng-model="FormVisible" value="false" > No
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" ng-click="cancelChannel()" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-warning" ng-click="launchChannel()" ng-disabled="!NewChannelFormValid" data-dismiss="modal">Launch it!</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-delete" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">
+								Delete Channel {{confirmName}} ?
+							</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" name="delchannel">
+                                    <div class="row">
+                                        <h5>Description</h5>
+                                        <p>{{confirmDescription}}</p>
+                                        
+                                    </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-danger" ng-click="confirmdeleteChannel(idtoremove)"  data-dismiss="modal"><span class="glyphicon glyphicon-trash"></span> Confirm</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+<br/>
+
+<div class="col-lg-12 col-md-8">
+    <div class="row">
+        <div class="col-md-4" ng-repeat="channel in channels | filter:channelnameflt">
+            <div class="panel panel-default animated"  ng-class="{'lightSpeedIn':!channel.isDeleted, 'hinge':channel.isDeleted}">
+                <div class="panel-heading">
+                    <div class="panel-title"> {{channel.Name}}
+                        <span class="badge"> {{channel.Contents}}</span>
+                        <span ng-show="channel.Premium" class="label label-info pull-right"> Premium</span>
+                    </div>
+
+                </div>
+                <div class="panel-body">
+                    {{channel.Description}}
+                </div>
+                <div class="panel-footer">
+                    <button ng-show="channel.Active" id="disable" name="disable" class="btn btn-xs btn-inverse" ng-click="changeActive(channel.id)"><span class="glyphicon glyphicon-ban-circle"></span> Disable</button>
+                    <button ng-show="!channel.Active" id="enable" name="enable" class="btn btn-xs btn-success" ng-click="changeActive(channel.id)"><span class="glyphicon glyphicon-ok-circle"></span> Activate</button>
+
+<!--                    <button id="delete" name="delete" ng-disabled="isremoving" class="btn btn-xs btn-danger" ng-click="deleteChannel(channel.id)"> <span class="glyphicon glyphicon-trash"></span> Delete!</button>
+                    -->
+                    
+                    <a  href="#modal-delete" ng-disabled="isremoving" role="button" ng-click="deleteChannel(channel.id)" class="btn btn-xs btn-danger" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span> Delete!</a>
+                    
+                    
+                    
+                    <label for="checkboxes-0" class="label label-primary pull-right">
+                        <span>Visible </span>
+                        <input type="checkbox" name="checkboxes" value="Visible" ng-model="channel.Visible">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+    
+    
+</div>
