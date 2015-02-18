@@ -9,13 +9,6 @@ app.set('port', (process.env.PORT || 9000));
 var mainTemp;
 
 console.log('Starting directory: ' + process.cwd());
-/*try {
-  process.chdir('./dist');
-  console.log('New directory: ' + process.cwd());
-}
-catch (err) {
-  console.log('chdir: ' + err);
-}*/
 
 fs.readFile('./index.html',function(err,data){
     if (err){

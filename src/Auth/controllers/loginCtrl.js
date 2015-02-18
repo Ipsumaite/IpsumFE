@@ -23,7 +23,7 @@
                 initSet.firstname = res.firstname;
                 initSet.lastname = res.lastname;
                 initSet.timestamp = new Date();
-                $state.go('home');
+                $state.go('mychannels');
                 
         })
         .error(function(data, status, headers, config){
