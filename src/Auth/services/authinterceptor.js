@@ -1,7 +1,7 @@
 'use strict';
 
 
-angular.module('IpsumFE').factory('authInterceptor', function (authToken) {
+angular.module('IpsumFE.Auth').factory('authInterceptor', function (authToken) {
 
     // Public API here
     return {

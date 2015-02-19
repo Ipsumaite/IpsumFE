@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('IpsumFE').config(function ($stateProvider, $urlRouterProvider, $locationProvider){
+angular.module('IpsumFE').config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider){
 
     $stateProvider
     .state('home', {
@@ -23,11 +23,12 @@ angular.module('IpsumFE').config(function ($stateProvider, $urlRouterProvider, $
     
 
     $urlRouterProvider.otherwise(function ($injector, $location) {
-            console.log("Not found");
+            console.log("IPSUMFE route not found");
             $injector.invoke(['$state', function ($state) { $state.go('error404'); }]);
             return true;
     });
     $locationProvider.html5Mode(true);
+    $httpProvider.interceptors.push('authInterceptor');
 })
-.constant('API_URL', 'http://ipsumapi.herokuapp.com/')
-.constant('API_SECURED_URL', 'http://ipsumapi.herokuapp.com/api/');
+.constant('API_URL', 'http://firebase-experiment-195611.euw1-2.nitrousbox.com:3000/')
+.constant('API_SECURED_URL', 'http://firebase-experiment-195611.euw1-2.nitrousbox.com:3000/api/');

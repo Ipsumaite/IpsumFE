@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('IpsumFE.Channels').controller('mychannelsCtrl', function ($scope,alert, $timeout) {
+angular.module('IpsumFE.Channels').controller('mychannelsCtrl', function ($scope,alert, $timeout, mychannelsSrv, initSet) {
 
     $scope.NewChannelFormValid = false;
     $scope.FormVisible = "false";
@@ -125,7 +125,8 @@ angular.module('IpsumFE.Channels').controller('mychannelsCtrl', function ($scope
          ];
     }
 
-    $timeout(loadChannels, 4000);
+    //$timeout(loadChannels, 4000);
+     $scope.channels = mychannelsSrv.getAll(initSet.email);
     
     $scope.$watch('[newchannel.Name,newchannel.Description]', function () {
         if ($scope.newchannel.Name != undefined && $scope.newchannel.Description != undefined) {
