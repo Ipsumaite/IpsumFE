@@ -12,7 +12,7 @@ angular.module('IpsumFE.Auth').factory('authtoken', function ($window) {
         setToken: function (token) {
             cachedToken = token;
             storage.setItem(userToken, token);
-            storage.setItem(dateToken, new Date().toISOString());
+            //storage.setItem(dateToken, new Date().toISOString());
         },
         setTokenDate: function () {
             storage.setItem(dateToken, new Date().toISOString());
@@ -22,16 +22,13 @@ angular.module('IpsumFE.Auth').factory('authtoken', function ($window) {
                 cachedToken = storage.getItem(userToken);
             return cachedToken;
         },
-        getTokenDate: function () {
-            return storage.getItem(dateToken);
-        },
         isAuthenticated: function () {
             return !!authtoken.getToken();
         },
         removeToken: function () {
             cachedToken = null;
             storage.removeItem(userToken);
-            storage.removeItem(dateToken);
+            //storage.removeItem(dateToken);
         }
     };
 

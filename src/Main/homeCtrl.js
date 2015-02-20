@@ -1,20 +1,26 @@
 'use strict';
 
 
-angular.module('IpsumFE').controller('homeCtrl', function ($scope, authtoken, $rootScope, initSet) {
+angular.module('IpsumFE').controller('homeCtrl', function ($scope, authtoken, $rootScope, initSet, setInitSrv) {
 
-    // If the last login session in the browser was more than the sesionTimeout user must logon again
-    var t2 = new Date(authtoken.getTokenDate());
-    var t1 = initSet.timestamp;
-    var tgap = (t1.getTime() - t2.getTime()) / (60 * 1000);
-
-    if (authtoken.isAuthenticated() && false == initSet.authenticated && tgap >= initSet.sessionTimeout) {
+    setInitSrv.getEmail().
+    then(function (response) {
+        console.log("Status "+ response.status);
+        if (response.data.email == undefined){
+             authtoken.removeToken();
+        }else{
+            $rootScope.email = response.data.email;
+            console.log("Checked Email "+ response.data.email);
+            
+        }
+      
+    }, function (error) {
+        alert('error', ' Checking Token', ' Please try to authenticate ');
         authtoken.removeToken();
-    }
+        console.error(error);
+    });
 
-    if (authtoken.isAuthenticated() && false == initSet.authenticated && tgap <= initSet.sessionTimeout) {
-        authtoken.setTokenDate();
-    }
+    
 
 
 });

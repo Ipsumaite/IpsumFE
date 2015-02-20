@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('IpsumFE').config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider){
+angular.module('IpsumFE').config(function ($stateProvider, $urlRouterProvider, $locationProvider){
 
     $stateProvider
     .state('home', {
@@ -28,7 +28,7 @@ angular.module('IpsumFE').config(function ($stateProvider, $urlRouterProvider, $
             return true;
     });
     $locationProvider.html5Mode(true);
-    $httpProvider.interceptors.push('authInterceptor');
+
 })
 .constant('API_URL', 'http://firebase-experiment-195611.euw1-2.nitrousbox.com:3000/')
 .constant('API_SECURED_URL', 'http://firebase-experiment-195611.euw1-2.nitrousbox.com:3000/api/');

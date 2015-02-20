@@ -1,12 +1,12 @@
 'use strict';
 
 
-angular.module('IpsumFE.Auth').factory('authInterceptor', function (authToken) {
+angular.module('IpsumFE.Auth').factory('authInterceptor', function (authtoken) {
 
     // Public API here
     return {
         request: function(config) {
-            var token = authToken.getToken();
+            var token = authtoken.getToken();
             if (token)
                 config.headers.Authorization = 'Bearer ' + token;
             return config; 
