@@ -24,6 +24,7 @@
                 initSet.firstname = res.firstname;
                 initSet.lastname = res.lastname;
                 initSet.timestamp = new Date();
+                $rootScope.email = res.email;
                 $state.go('mychannels');
                 
         })

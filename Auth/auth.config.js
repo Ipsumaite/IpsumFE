@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('IpsumFE.Auth').config(function ($stateProvider, $urlRouterProvider, $locationProvider){
+angular.module('IpsumFE.Auth').config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider){
 
     $stateProvider
     .state('register', {
@@ -21,4 +21,6 @@ angular.module('IpsumFE.Auth').config(function ($stateProvider, $urlRouterProvid
             url: '/logout',
             controller: 'logoutCtrl'
     });
+    
+    $httpProvider.interceptors.push('authInterceptor');
 });
