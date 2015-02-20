@@ -1,7 +1,7 @@
 'use strict';
 
 
-  angular.module('IpsumFE.Auth').controller('loginCtrl', function ($scope, authtoken,$rootScope,$state, alert, initSet, $http, API_URL) {
+  angular.module('IpsumFE.Auth').controller('loginCtrl', function ($scope, authtoken,$rootScope,$state, alert, initSet, authSrv) {
 
     $scope.email="";
     $scope.password="";
@@ -15,27 +15,24 @@
         };
        alert('info', 'Trying to signin',' just wait a few moments please. ');
         
-        $http.post(API_URL +"login", user)
-        .success(function(res){
-                alert('success', 'Hi',' welcome back '+ res.firstname + ' ' + res.lastname +  '!');
-                authtoken.setToken(res.token);
+       authSrv.signIn(user).
+        then(function (response) {
+                alert('success', 'Hi',' welcome back '+ response.data.firstname + ' ' + response.data.lastname +  '!');
+                authtoken.setToken(response.data.token);
                 initSet.authenticated = true;
-                initSet.email = res.email;
-                initSet.firstname = res.firstname;
-                initSet.lastname = res.lastname;
+                initSet.email = response.data.email;
+                initSet.firstname = response.data.firstname;
+                initSet.lastname = response.data.lastname;
                 initSet.timestamp = new Date();
-                $rootScope.email = res.email;
+                $rootScope.email = response.data.email;
                 $state.go('mychannels');
-                
-        })
-        .error(function(data, status, headers, config){
-            alert('warning', 'Opps!', data);
+        }, function (error) {
+            alert('warning', 'Opps!', error.data);
+            authtoken.removeToken();
         });
         
      };
         
-        
-
     
       
     $scope.$watch('password', function(newval) {
