@@ -1,7 +1,7 @@
 'use strict';
 
 
-  angular.module('IpsumFE.Auth').controller('registerCtrl', function ($scope, authtoken, alert, initSet, $state, $http, API_URL) {
+  angular.module('IpsumFE.Auth').controller('registerCtrl', function ($scope, authtoken, alert, initSet, $state, authSrv) {
 
     $scope.stage1=false;
     $scope.email="";
@@ -25,30 +25,38 @@
 
     $scope.signup = function(){
         
-          var struser= "{\"firstname\":\""+ $scope.firstname +"\", \"lastname\":\"" + $scope.lastname + "\", \"phone\":\"" + $scope.phone + "\", \"address\":\""+$scope.address+"\"}";
+          var usrinfo= {
+              "firstname": $scope.firstname,
+              "lastname": $scope.lastname,
+              "phone": $scope.phone,
+              "address": $scope.address
+              };
         
           var user ={
             email: $scope.email,
             password: $scope.password,
-            user: struser
+            user: usrinfo
           };
         
         alert('info', 'Trying to signup',' just wait a few moments please. ');
-        $http.post(API_URL +"signup", user)
-        .success(function(res){
-                alert('success', 'Hi',' welcome ' + res.firstname + ' ' + res.lastname + '!');
-                authtoken.setToken(res.token);
+        
+        authSrv.signUp(user).
+        then(function (response) {
+                alert('success', 'Hi',' welcome ' + response.data.firstname + ' ' + response.data.lastname + '!');
+                authtoken.setToken(response.data.token);
                 initSet.authenticated = true;
-                initSet.email = res.email;
-                initSet.firstname = res.firstname;
-                initSet.lastname = res.lastname;
+                initSet.email = response.data.email;
+                initSet.firstname = response.data.firstname;
+                initSet.lastname = response.data.lastname;
                 initSet.timestamp = new Date();
+                $rootScope.email = response.data.email;
                 $state.go('mychannels');
-                
-        })
-        .error(function(data, status, headers, config){
-            alert('warning', 'Opps!', data);
+        }, function (error) {
+            alert('warning', 'Opps!', error.data);
+            authtoken.removeToken();
         });
+    
+
     };
     
     $scope.checkPass = function(){

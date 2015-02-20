@@ -9,7 +9,7 @@ angular.module('IpsumFE').factory('setInitSrv', function ( $http, $q, API_SECURE
                     var deferred = $q.defer(),
                         httpPromise = $http.get(API_SECURED_URL + 'readtoken');
                             httpPromise.then(function (response) {
-                                console.log(response.data.message);
+                                console.log("Message " + response.data.message);
                                 deferred.resolve(response);
                             }, function (error) {
                                 console.error(error);
