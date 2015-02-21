@@ -30,5 +30,5 @@ angular.module('IpsumFE').config(function ($stateProvider, $urlRouterProvider, $
     $locationProvider.html5Mode(true);
 
 })
-.constant('API_URL', 'http://localhost:3000/')
-.constant('API_SECURED_URL', 'http://localhost:3000/api/');
+.constant('API_URL', 'http://ipsumapi.herokuapp.com/')
+.constant('API_SECURED_URL', 'http://ipsumapi.herokuapp.com/api/');

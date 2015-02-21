@@ -8,7 +8,7 @@ angular.module('IpsumFE.Channels').controller('mychannelsCtrl', function ($scope
     $scope.FormSelectActive = true;
     $scope.rowtoremove = -1;
     $scope.repeatedname = true;
-    $scope.isremoving = false;
+    $scope.isupdating = false;
     $scope.channels = [];
     $scope.channelsShadow = [];
 
@@ -127,6 +127,7 @@ angular.module('IpsumFE.Channels').controller('mychannelsCtrl', function ($scope
 
         $scope.newchannel.id = maxvalue + 1;
         $scope.newchannel.Contents = 0;
+        
         $scope.channelsShadow.push(
             {
                 "Visible":$scope.newchannel.Visible,
@@ -136,40 +137,12 @@ angular.module('IpsumFE.Channels').controller('mychannelsCtrl', function ($scope
                 "Name":$scope.newchannel.Name,
                 "Description":$scope.newchannel.Description,
                 "flag":1,
+                "idnum": $scope.newchannel.id
             }
         );
         
-        mychannelsSrv.sync({"email":$rootScope.email, "channels":$scope.channelsShadow} ).
-        then(function (response) {
-             mychannelsSrv.getAll($rootScope.email).
-                then(function (res) {
-                    var k = 0;
-                    $scope.channelsShadow = [];
-                    for (k = 0; k < res.data.totalSize; k++) {
-                        $scope.channelsShadow.push({
-                            "Active": res.data.records[k].Active__c,
-                            "Description": res.data.records[k].description__c,
-                            "Id": res.data.records[k].Id,
-                            "Name": res.data.records[k].Name,
-                            "Premium": res.data.records[k].Premium__c,
-                            "Visible": res.data.records[k].Visible__c,
-                            "Contents": 0,
-                            "isDeleted": false,
-                            "idnum": k,
-                            "flag": 0
-                        });
-                    }
-                    $scope.channels=angular.copy($scope.channelsShadow);
-                }, function (error) {
-                    alert('error', 'Synchronizing channels', ' not possible to read channels ');
-                    console.error(error);
-                });
-        }, function (error) {
-            alert('error', 'Saving channels', ' not possible to save recent created channels ');
-            console.error(error);
-        });
-        
-        
+        $scope.UpdateChannels( maxvalue + 1, 1);
+    
     }
 
     $scope.deleteChannel = function (rownum) {
@@ -184,16 +157,16 @@ angular.module('IpsumFE.Channels').controller('mychannelsCtrl', function ($scope
 
     }
 
-    $scope.confirmdeleteChannel = function (rownum) {
+    $scope.UpdateChannels = function (rownum, flag) {
         var k = 0;
         var channel;
-        for (channel in $scope.channels) {
-            if (rownum == $scope.channels[k].idnum) {
-                $scope.channels[k].isDeleted = true;
-                $scope.channelsShadow[k].flag = 2;
+        for (channel in $scope.channelsShadow) {
+            if (rownum == $scope.channelsShadow[k].idnum) {
+                $scope.channelsShadow[k].flag = flag;
+                if (flag==2) $scope.channels[k].isDeleted = true;
                 $scope.rowtoremove = k;
-                $scope.isremoving = true;
-                
+                $scope.isupdating = true;
+                if (flag==3)$scope.channelsShadow[k].Visible=  $scope.channels[k].Visible;
                 mychannelsSrv.sync({"email":$rootScope.email, "channels":$scope.channelsShadow} ).
                 then(function (response) {
                     mychannelsSrv.getAll($rootScope.email).
@@ -216,7 +189,7 @@ angular.module('IpsumFE.Channels').controller('mychannelsCtrl', function ($scope
                         }
                         $scope.channels=angular.copy($scope.channelsShadow);
                         $scope.rowtoremove = -1;
-                        $scope.isremoving = false;
+                        $scope.isupdating = false;
                     }, function (error) {
                         alert('error', 'Synchronizing channels', ' not possible to read channels ');
                         console.error(error);
@@ -229,55 +202,22 @@ angular.module('IpsumFE.Channels').controller('mychannelsCtrl', function ($scope
             k++;
         }
     }
-    
-    //$scope.ChangeVisible
 
     $scope.changeActive = function (rownum) {
         var k = 0;
         var channel;
-        for (channel in $scope.channels) {
-            if (rownum == $scope.channels[k].idnum) {
-                if ($scope.channels[k].Active)
-                    $scope.channels[k].Active = false;
+        for (channel in $scope.channelsShadow) {
+            if (rownum == $scope.channelsShadow[k].idnum) {
+                if ($scope.channelsShadow[k].Active)
+                    $scope.channelsShadow[k].Active = false;
                 else
-                    $scope.channels[k].Active = true;
+                    $scope.channelsShadow[k].Active = true;
                 
+                $scope.UpdateChannels(k,3);
             }
-            $scope.channels[k].flag=3;
             k++;
         }
-        
-        
-                mychannelsSrv.sync({"email":$rootScope.email, "channels":$scope.channels} ).
-                 then(function (response) {
-                    mychannelsSrv.getAll($rootScope.email).
-                    then(function (res) {
-                        var k = 0;
-                        $scope.channelsShadow = [];
-                        for (k = 0; k < res.data.totalSize; k++) {
-                            $scope.channelsShadow.push({
-                                "Active": res.data.records[k].Active__c,
-                                "Description": res.data.records[k].description__c,
-                                "Id": res.data.records[k].Id,
-                                "Name": res.data.records[k].Name,
-                                "Premium": res.data.records[k].Premium__c,
-                                "Visible": res.data.records[k].Visible__c,
-                                "Contents": 0,
-                                "isDeleted": false,
-                                "idnum": k,
-                                "flag": 0
-                            });
-                        }
-                    }, function (error) {
-                        alert('error', 'Synchronizing channels', ' not possible to update channels ');
-                        console.error(error);
-                    });
-                }, function (error) {
-                    alert('error', 'Updating channel', ' not possible to update selected channel ');
-                    console.error(error);
-                });
-        
-    }
+   }
 
     $scope.ChannelExists = function (rownum) {
         var k = 0;
@@ -299,10 +239,6 @@ angular.module('IpsumFE.Channels').controller('mychannelsCtrl', function ($scope
             }else{
                
                 
-            }
-            var k;
-            for (k = 0; k < newVal.length; k++) {
-                console.log("Id: " + newVal[k].idnum + " , " + newVal[k].Name);
             }
         }
     }, true);
