@@ -5,9 +5,9 @@ angular.module('IpsumFE.Channels').factory('mychannelsSrv', function ( $http, $q
 
     // Public API here
     var mychannels = {
-        getAll: function (email) {
+        getAll: function (email, method) {
             var deferred = $q.defer(),
-                httpPromise = $http.get(API_SECURED_URL + 'mychannels/' + email);
+                httpPromise = $http.get(API_SECURED_URL + method + '/' + email);
             httpPromise.then(function (response) {
                 deferred.resolve(response);
             }, function (error) {
@@ -15,9 +15,9 @@ angular.module('IpsumFE.Channels').factory('mychannelsSrv', function ( $http, $q
             });
             return deferred.promise;
         },
-        sync: function(channels){
+        sync: function(channels, method){
             var deferred = $q.defer(),
-            httpPromise =$http.post(API_SECURED_URL +'mychannels', channels);
+            httpPromise =$http.post(API_SECURED_URL +method, channels);
             httpPromise.then(function (response) {
                 deferred.resolve(response);
             }, function (error) {

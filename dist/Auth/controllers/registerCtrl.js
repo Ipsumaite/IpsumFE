@@ -40,7 +40,7 @@
         
         alert('info', 'Trying to signup',' just wait a few moments please. ');
         
-        authSrv.signUp(user).
+        authSrv.signing(user, 'singup').
         then(function (response) {
                 alert('success', 'Hi',' welcome ' + response.data.firstname + ' ' + response.data.lastname + '!');
                 authtoken.setToken(response.data.token);
