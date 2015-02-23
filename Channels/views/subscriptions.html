@@ -1,182 +1,47 @@
- <div class="container">
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<h2>Subscriptions</h2>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <h2>Subscriptions</h2>
             </br>
-            
-			<table class="table table-condensed table-hover table-bordered">
-                <h4>Subscribed</h4>
-				<thead>
-					<tr>
-						<th>Name</th><th>Description</th><th>Type</th><th>Created At</th><th>Options</th>
-					</tr>
-				</thead>
-				<tbody>
-                     <tr ng-repeat="channel in subscribed">
-                        <td>{{channel.Name}}</td>
-                        <td>{{channel.Description}}</td>
-                        <td>{{channel.Type}}</td>
-                        <td>{{channel.CreatedAt}}</td>
-                        <td>    
-                            <button id="modal-sub-detail{{channel.code}}" href="#modal-container-sub-detail{{channel.code}}" role="button" class="btn btn-xs btn-info" data-toggle="modal">Detail</button>
 
-                                        <div class="modal fade" id="modal-container-sub-detail{{channel.code}}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                        <h4 class="modal-title" id="myModalLabel">
-                                                            {{channel.Name}} - Details
-                                                        </h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        {{channel.Detail}}
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                            
-                                <button id="modal-sub-unsubscribe{{channel.code}}" href="#modal-container-sub-unsubscribe{{channel.code}}" role="button" class="btn btn-xs btn-inverse" data-toggle="modal">Unsubscribe</button>
-
-                                        <div class="modal fade" id="modal-container-sub-unsubscribe{{channel.code}}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                        <h4 class="modal-title" id="myModalLabel">
-                                                            {{channel.Name}} - Unsubscription
-                                                        </h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form class="form-horizontal">
-                                                        <fieldset>
-                                                        <div class="form-group">
-                                                          <label class="col-md-4 control-label" for="confirmsubscription"> Are you sure?</label>
-                                                          <div class="col-md-4">
-                                                          <div class="radio">
-                                                            <label for="confirmsubscription-0">
-                                                              <input type="radio" name="confirmsubscription" id="confirmsubscription-0" value="1" checked="checked">
-                                                              No
-                                                            </label>
-                                                            </div>
-                                                          <div class="radio">
-                                                            <label for="confirmsubscription-1">
-                                                              <input type="radio" name="confirmsubscription" id="confirmsubscription-1" value="2">
-                                                              Yes
-                                                            </label>
-                                                            </div>
-                                                          </div>
-                                                        </div>
-
-                                                        </fieldset>
-                                                        </form>
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
- 
-                          </td>
-                     </tr>
-				</tbody>
-			</table>
-        
-        <table class="table table-condensed table-hover table-bordered">
+            <table class="table table-condensed table-hover table-bordered">
                 <h4>Available</h4>
-				<thead>
-					<tr>
-						<th>Name</th><th>Description</th><th>Type</th><th>Created At</th><th>Options</th>
-					</tr>
-				</thead>
-				<tbody>
-                     <tr ng-repeat="channel in available">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="channel in channels">
                         <td>{{channel.Name}}</td>
-                        <td>{{channel.Description}}</td>
-                        <td>{{channel.Type}}</td>
-                        <td>{{channel.CreatedAt}}</td>
-                        <td>    
-                            <button id="modal-sub-detail{{channel.code}}" href="#modal-container-sub-detail{{channel.code}}" role="button" class="btn btn-xs btn-info" data-toggle="modal">Detail</button>
+                        <td>{{channel.Description}}
+                            <span ng-show="channel.Premium" class="label label-info pull-right"> Premium</span>
+                        </td>
+                        <td>
+                            <button ng-show="channel.Subscribed" id="disable" ng-disabled="isupdating" name="disable" class="btn btn-xs btn-inverse" ng-click="changeStatus(channel.idnum)"><span class="glyphicon glyphicon-ban-circle"></span> Unsubscribe</button>
+                            <button ng-show="!channel.Subscribed" id="enable" ng-disabled="isupdating" name="enable" class="btn btn-xs btn-success" ng-click="changeStatus(channel.idnum)"><span class="glyphicon glyphicon-ok-circle"></span> Subscribe</button>
+                            <button ng-show="channel.Subscribed && !channel.details" id="enable" ng-disabled="isupdating" name="enable" class="btn btn-xs btn-info pull-right" ng-click="seeDetails(channel.idnum)"><span class="glyphicon glyphicon-zoom-in"></span> Subscription Details</button>
+                            <button ng-show="channel.Subscribed && channel.details" id="enable" ng-disabled="isupdating" name="enable" class="btn btn-xs btn-inverse pull-right" ng-click="seeDetails(channel.idnum)"><span class="glyphicon glyphicon-zoom-out"></span> Subscription Details</button>
 
-                                        <div class="modal fade" id="modal-container-sub-detail{{channel.code}}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                        <h4 class="modal-title" id="myModalLabel">
-                                                            {{channel.Name}} - Details
-                                                        </h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        {{channel.Detail}}
+                            <div class="panel panel-default animated" ng-class="{'bounceIn':channel.details, 'bounceOut':!channel.details}">
+                                <div class="panel-heading">
+                                    <div class="panel-title"> Subscription: {{channel.Subscription.ContractNumber}} </div>
+                                </div>
+                                <div class="panel-body">
+                                    Valid from {{channel.Subscription.StartDate}} to {{channel.Subscription.EndDate}}
+                                    <br/> {{channel.Subscription.Description}}
+                                </div>
 
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
-                                                    </div>
-                                                </div>
+                            </div>
+                        </td>
 
-                                            </div>
-                                        </div>
-                            
-                                <button id="modal-sub-unsubscribe{{channel.code}}" href="#modal-container-sub-unsubscribe{{channel.code}}" role="button" class="btn btn-xs btn-warning" data-toggle="modal">Subscribe</button>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-                                        <div class="modal fade" id="modal-container-sub-unsubscribe{{channel.code}}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                        <h4 class="modal-title" id="myModalLabel">
-                                                            {{channel.Name}} - Subscription
-                                                        </h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form class="form-horizontal">
-                                                        <fieldset>
-                                                        <div class="form-group">
-                                                          <label class="col-md-4 control-label" for="confirmsubscription"> Are you sure?</label>
-                                                          <div class="col-md-4">
-                                                          <div class="radio">
-                                                            <label for="confirmsubscription-0">
-                                                              <input type="radio" name="confirmsubscription" id="confirmsubscription-0" value="1" checked="checked">
-                                                              No
-                                                            </label>
-                                                            </div>
-                                                          <div class="radio">
-                                                            <label for="confirmsubscription-1">
-                                                              <input type="radio" name="confirmsubscription" id="confirmsubscription-1" value="2">
-                                                              Yes
-                                                            </label>
-                                                            </div>
-                                                          </div>
-                                                        </div>
 
-                                                        </fieldset>
-                                                        </form>
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
- 
-                          </td>
-                     </tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-    
-	
 </div>
