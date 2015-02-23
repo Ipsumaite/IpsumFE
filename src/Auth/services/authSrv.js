@@ -16,7 +16,7 @@ angular.module('IpsumFE.Auth').factory('authSrv', function ( $http, $q, API_SECU
                             });
                             return deferred.promise;
                         },
-                signIn:function(user){
+                signing:function(user, method){
                     var deferred = $q.defer(),
                         httpPromise =$http.post(API_URL +'login', user);
                         httpPromise.then(function (response) {
@@ -25,18 +25,7 @@ angular.module('IpsumFE.Auth').factory('authSrv', function ( $http, $q, API_SECU
                                 console.error(error);
                         });
                         return deferred.promise;
-                },
-                signUp:function(user){
-                    var deferred = $q.defer(),
-                        httpPromise =$http.post(API_URL +'signup', user);
-                        httpPromise.then(function (response) {
-                                deferred.resolve(response);
-                        }, function (error) {
-                                console.error(error);
-                        });
-                        return deferred.promise;
                 }
-
             };
 
             return authSrv;

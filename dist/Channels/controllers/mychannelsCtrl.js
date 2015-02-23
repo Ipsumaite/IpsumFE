@@ -61,18 +61,18 @@ angular.module('IpsumFE.Channels').controller('mychannelsCtrl', function ($scope
     $scope.newchannel = $scope.initNewChannel();
     $scope.resetChannelForm();
 
-    mychannelsSrv.getAll($rootScope.email).
+    mychannelsSrv.getAll($rootScope.email, 'mychannels').
     then(function (response) {
         var k = 0;
         $scope.channels = [];
         for (k = 0; k < response.data.totalSize; k++) {
             $scope.channels.push({
-                "Active": response.data.records[k].Active__c,
-                "Description": response.data.records[k].description__c,
-                "Id": response.data.records[k].Id,
-                "Name": response.data.records[k].Name,
-                "Premium": response.data.records[k].Premium__c,
-                "Visible": response.data.records[k].Visible__c,
+                "Active": response.data.channels[k].Active,
+                "Description": response.data.channels[k].Description,
+                "Id": response.data.channels[k].Id,
+                "Name": response.data.channels[k].Name,
+                "Premium": response.data.channels[k].Premium,
+                "Visible": response.data.channels[k].Visible,
                 "Contents": 0,
                 "isDeleted": false,
                 "idnum": k,
@@ -167,20 +167,20 @@ angular.module('IpsumFE.Channels').controller('mychannelsCtrl', function ($scope
                 $scope.rowtoremove = k;
                 $scope.isupdating = true;
                 if (flag==3)$scope.channelsShadow[k].Visible=  $scope.channels[k].Visible;
-                mychannelsSrv.sync({"email":$rootScope.email, "channels":$scope.channelsShadow} ).
+                mychannelsSrv.sync({"email":$rootScope.email, "channels":$scope.channelsShadow}, 'mychannels').
                 then(function (response) {
-                    mychannelsSrv.getAll($rootScope.email).
+                    mychannelsSrv.getAll($rootScope.email, 'mychannels').
                     then(function (res) {
                         var k = 0;
                         $scope.channelsShadow = [];
                         for (k = 0; k < res.data.totalSize; k++) {
                             $scope.channelsShadow.push({
-                                "Active": res.data.records[k].Active__c,
-                                "Description": res.data.records[k].description__c,
-                                "Id": res.data.records[k].Id,
-                                "Name": res.data.records[k].Name,
-                                "Premium": res.data.records[k].Premium__c,
-                                "Visible": res.data.records[k].Visible__c,
+                                "Active": res.data.channels[k].Active,
+                                "Description": res.data.channels[k].Description,
+                                "Id": res.data.channels[k].Id,
+                                "Name": res.data.channels[k].Name,
+                                "Premium": res.data.channels[k].Premium,
+                                "Visible": res.data.channels[k].Visible,
                                 "Contents": 0,
                                 "isDeleted": false,
                                 "idnum": k,

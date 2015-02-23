@@ -15,7 +15,7 @@
         };
        alert('info', 'Trying to signin',' just wait a few moments please. ');
         
-       authSrv.signIn(user).
+       authSrv.signing(user, 'login').
         then(function (response) {
                 alert('success', 'Hi',' welcome back '+ response.data.firstname + ' ' + response.data.lastname +  '!');
                 authtoken.setToken(response.data.token);
