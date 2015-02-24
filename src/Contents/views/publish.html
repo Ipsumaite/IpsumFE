@@ -1,73 +1,78 @@
 <div class="container">
-	<div class="row clearfix">
-		<div class="col-md-6 column">
-            
-        <form class="form-horizontal">
-        <fieldset>
+    <div class="row clearfix">
+        <div class="col-md-6 column">
 
-        <!-- Form Name -->
-        <legend>Publish</legend>
+            <form class="form-horizontal">
+                <fieldset>
 
-        <!-- Select Basic -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="Channel">Channel</label>
-          <div class="col-md-4">
-            <select data-ng-model="channels" class="form-control" 
-                    data-ng-options="ch.Id as ch.Name for ch in channels"> </select>
-          </div>
+                    <!-- Form Name -->
+                    <legend>Publish</legend>
+
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="Channel">Channel</label>
+                        <div class="col-md-4">
+                            <select data-ng-model="selectedChannel" class="form-control" data-ng-options="ch.Id as ch.Name for ch in channels"> </select>
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="latitude">Latitude</label>
+                        <div class="col-md-4">
+                            <input id="latitude" name="latitude" type="text" ng-model="markerlist.msgMarker.lat" placeholder="45.3456" class="form-control input-md" maxlength="8">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="longitude">Longitude</label>
+                        <div class="col-md-4">
+                            <input id="longitude" name="longitude" type="text" ng-model="markerlist.msgMarker.lng" placeholder="3.7532" class="form-control input-md" maxlength="8">
+
+                        </div>
+                    </div>
+
+                    <!-- Appended Input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="channeltext"></label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input ng-model="Content" class="form-control" placeholder="Write Something" type="text">
+                                <button class="btn btn-xs btn-info" ng-disabled="!Content" ng-click="Publish()">Publish</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+
+
         </div>
-
-        <!-- Text input-->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="latitude">Latitude</label>  
-          <div class="col-md-4">
-          <input id="latitude" name="latitude" type="text" ng-model="markerlist.msgMarker.lat" placeholder="45.3456" class="form-control input-md">
-
-          </div>
+        <div class="col-md-6 column">
+            <leaflet width="350px" height="300px" markers="markerlist" center="center"></leaflet>
         </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-6 column">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Channel </th>
+                        <th>Content</th>
+                        <th>Time </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--<tr ng-repeat="channel in mychannels">
+                        <tr>
+                        </tr>
+                        <td>{{channel.$value}}</td>
+                        <td>Content X</td>
+                    </tr>-->
+                </tbody>
+            </table>
 
-        <!-- Text input-->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="longitude">Longitude</label>  
-          <div class="col-md-4">
-          <input id="longitude" name="longitude" type="text" ng-model="markerlist.msgMarker.lng" placeholder="3.7532" class="form-control input-md">
-
-          </div>
         </div>
-
-        <!-- Appended Input-->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="channeltext"></label>
-          <div class="col-md-8">
-            <div class="input-group">
-              <input id="channeltext" name="channeltext" class="form-control" placeholder="placeholder" type="text">
-              <span class="input-group-addon">Send</span>
-            </div>
-
-          </div>
-        </div>
-        <!-- Select Multiple -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="selectmultiple"></label>
-          <div class="col-md-8">
-            <select id="selectmultiple" name="selectmultiple" class="form-control" multiple="multiple">
-              <option value="1">Option one</option>
-              <option value="2">Option two</option>
-            </select>
-          </div>
-        </div>
-
-        </fieldset>
-        </form>
-
-
-		</div>
-		<div class="col-md-6 column">
-             <leaflet   width="350px" height="300px" markers="markerlist" center="center"></leaflet>
-		</div>
-	</div>
-</div>
-
-
-
-   

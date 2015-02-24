@@ -1,13 +1,19 @@
 'use strict';
 
-angular.module('IpsumFE.Contents').factory('contentsSrv', function ( $http, $q, API_SECURED_URL) {
+angular.module('IpsumFE.Contents').factory('contentsSrv', function ($http, $q, API_SECURED_URL) {
 
 
     // Public API here
     var mychannels = {
         getAll: function (email, method) {
-            var deferred = $q.defer(),
-                httpPromise = $http.get(API_SECURED_URL + method + '/' + email);
+            var deferred = $q.defer();
+            var par;
+            if (email.length > 0)
+                par = '/' + email;
+            else
+                par = '';
+
+            var httpPromise = $http.get(API_SECURED_URL + method + par);
             httpPromise.then(function (response) {
                 deferred.resolve(response);
             }, function (error) {
@@ -15,9 +21,9 @@ angular.module('IpsumFE.Contents').factory('contentsSrv', function ( $http, $q, 
             });
             return deferred.promise;
         },
-        sync: function(channels, method){
+        sync: function (channels, method) {
             var deferred = $q.defer(),
-            httpPromise =$http.post(API_SECURED_URL +method, channels);
+                httpPromise = $http.post(API_SECURED_URL + method, channels);
             httpPromise.then(function (response) {
                 deferred.resolve(response);
             }, function (error) {
@@ -25,7 +31,7 @@ angular.module('IpsumFE.Contents').factory('contentsSrv', function ( $http, $q, 
             });
             return deferred.promise;
         }
-    
+
     };
 
     return mychannels;
