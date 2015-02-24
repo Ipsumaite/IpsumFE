@@ -1,3 +1,3 @@
 'use strict';
 
-var IpsumFEContents = angular.module('IpsumFE.Contents', ['ui.router', ]);
+var IpsumFEContents = angular.module('IpsumFE.Contents', ['ui.router' , 'leaflet-directive']);
