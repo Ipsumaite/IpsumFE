@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('IpsumFE.Contents').controller('publishCtrl', function ($scope, $rootScope, alert, contentsSrv, $firebase) {
+angular.module('IpsumFE.Contents').controller('publishCtrl', function ($scope, $rootScope, $window, $timeout, alert, contentsSrv, $firebase) {
 
 
     $scope.channels = [];
@@ -8,7 +8,7 @@ angular.module('IpsumFE.Contents').controller('publishCtrl', function ($scope, $
 
 
 
-    var fbRef, fbURL, mychannels;
+    var fbRef, fbURL, mychannels, ref;
 
     $scope.center = {
         lat: 40.095,
@@ -47,9 +47,36 @@ angular.module('IpsumFE.Contents').controller('publishCtrl', function ($scope, $
             });
         }
         $scope.Content = undefined;
+      
+    
+            
+        
     }
 
 
+  ref = new $window.Firebase("https://glowing-heat-3433.firebaseio.com/channels/");
+            // Retrieve new contents as they are added to Firebase
+        ref.on("child_added", function(snapshotUser) {
+          // Retrieve new contents as they are added to Firebase
+            ref.child(snapshotUser.key()).on("child_added", function(snapshotChannel) {
+                var newChannel = snapshotChannel.val();
+                console.log("User "+ snapshotUser.key() +": Channel " + snapshotChannel.key());
+                ref.child(snapshotUser.key()+"/"+ snapshotChannel.key()).on("child_added", function(snapshotContent) {
+                   var newContent = snapshotContent.val();
+                  //console.log("User "+ snapshotUser.key() +": Channel " + snapshotChannel.key() + ": Content "+ newContent.content + " :Key " + snapshotContent.key() );
+
+                    $timeout(function() {
+                        var newUser = snapshotUser.val();
+                        console.log("Content -->"  + " " + newContent.content);
+                    });
+
+                    
+                });  
+            });
+
+           
+        });
+    
 
 
     contentsSrv.getAll($rootScope.email, 'mychannels').
@@ -75,21 +102,6 @@ angular.module('IpsumFE.Contents').controller('publishCtrl', function ($scope, $
                             console.log("--->" + fbURL);
                             fbRef = new Firebase("https://" + fbURL + "/channels/" + $scope.userid);
                             mychannels = $firebase(fbRef);
-
-                            for (k = 0; k < $scope.channels.length; k++) {
-                                var fbRef2 = fbRef.child($scope.userid).limitToLast(50);
-                                console.log("$$*" + $scope.channels[k].Name + ", " + $scope.channels[k].Id);
-
-                                var mymessages = $firebase(fbRef2);
-                                var messagesArray = mymessages.$asArray();
-                                var l = 0;
-                                console.log("Length" + messagesArray.length);
-                                for (l = 0; l < messagesArray.length; l++) {
-                                    console.log("****" + scope.channels[k].Name + "---" + messagesArray[k].content);
-                                }
-                            }
-                            //$scope.mymessages = mychannels.$asObject();
-
                         },
                         function (error) {
                             alert('error', 'Loading channels', ' not possible to read channels ');
