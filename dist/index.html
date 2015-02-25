@@ -16,7 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="style/animate.css">
-        <link rel="stylesheet" href="style/leaflet.css">
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
 
         <title>Ipsum Project</title>
         <link rel="icon" type="image/png" href="img/icon.png">
@@ -49,13 +49,18 @@
          <script type="text/javascript"> document.write("<base href='http://" + document.location.host + "' />"); </script>     
          <script src="node_modules/jquery/dist/jquery.min.js"></script>
          <script src="lib/bootstrap/js/bootstrap.min.js"></script>  
-         <script src="lib/leaflet.js"></script>
+
 
         
          <!-- Angular -->
          <script src="node_modules/angular/angular.js"></script>
          <script src="node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+
+        
+         <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
          <script src="lib/angular-leaflet-directive.min.js"></script>
+         <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+         <script src="https://cdn.firebase.com/libs/angularfire/0.8.2/angularfire.min.js"></script>
 
          <!-- Auth Module -->
          <script src="Auth/auth.module.js"></script>
@@ -79,6 +84,7 @@
          <!-- Contents Module -->
          <script src="Contents/contents.module.js"></script>
          <script src="Contents/contents.config.js"></script>
+         <script src="Contents/services/contentsSrv.js"></script>
          <script src="Contents/controllers/publishCtrl.js"></script>
          <script src="Contents/controllers/dashboardCtrl.js"></script>
         
