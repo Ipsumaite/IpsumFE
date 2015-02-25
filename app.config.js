@@ -32,7 +32,5 @@ angular.module('IpsumFE').config(function ($stateProvider, $urlRouterProvider, $
         $locationProvider.html5Mode(true);
 
     })
-    //.constant('API_URL', 'http://ipsumapi.herokuapp.com/')
-    //.constant('API_SECURED_URL', 'http://ipsumapi.herokuapp.com/api/');
-    .constant('API_URL', 'http://firebase-experiment-195611.euw1-2.nitrousbox.com:3000/')
-    .constant('API_SECURED_URL', 'http://firebase-experiment-195611.euw1-2.nitrousbox.com:3000/api/');
+    .constant('API_URL', 'http://ipsumapi.herokuapp.com/')
+    .constant('API_SECURED_URL', 'http://ipsumapi.herokuapp.com/api/');

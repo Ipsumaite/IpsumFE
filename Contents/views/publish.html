@@ -62,16 +62,19 @@
                     <tr>
                         <th>Channel </th>
                         <th>Content</th>
-                        <th>Time </th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Timestamp</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!--<tr ng-repeat="channel in mychannels">
-                        <tr>
-                        </tr>
-                        <td>{{channel.$value}}</td>
-                        <td>Content X</td>
-                    </tr>-->
+                    <tr ng-repeat="channel in mychannels">
+                        <td>{{channel.payload.chName}}</td>
+                        <td>{{channel.payload.content}}</td>
+                        <td>{{channel.payload.latitude}}</td>
+                        <td>{{channel.payload.longitude}}</td>
+                        <td>{{channel.payload.date | date:'MM/dd/yyyy h:mma'}}</td>
+                    </tr>
                 </tbody>
             </table>
 

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('IpsumFE.Contents').controller('publishCtrl', function ($scope, $rootScope, $window, $timeout, alert, contentsSrv, $firebase) {
+angular.module('IpsumFE.Contents').controller('publishCtrl', function ($scope, $rootScope, $window, $timeout, alert, contentsSrv, $firebase, $interval) {
 
 
     $scope.channels = [];
@@ -35,48 +35,27 @@ angular.module('IpsumFE.Contents').controller('publishCtrl', function ($scope, $
 
 
     $scope.Publish = function () {
-        console.log("Publishing :" + $scope.Content);
+        // console.log("Publishing :" + $scope.Content);
 
         if (undefined != $scope.Content) {
             var postsRef = fbRef.child($scope.selectedChannel);
+            var selectChannelName;
+            var k;
+            for (k = 0; k < $scope.channels.length; k++) {
+                if ($scope.channels[k].Id == $scope.selectedChannel)
+                    selectChannelName = $scope.channels[k].Name;
+            }
+
             postsRef.push({
                 content: $scope.Content,
                 latitude: $scope.markerlist.msgMarker.lat.toFixed(4),
                 longitude: $scope.markerlist.msgMarker.lng.toFixed(4),
-                date: Firebase.ServerValue.TIMESTAMP
+                date: Firebase.ServerValue.TIMESTAMP,
+                chName: selectChannelName
             });
         }
         $scope.Content = undefined;
-      
-    
-            
-        
     }
-
-
-  ref = new $window.Firebase("https://glowing-heat-3433.firebaseio.com/channels/");
-            // Retrieve new contents as they are added to Firebase
-        ref.on("child_added", function(snapshotUser) {
-          // Retrieve new contents as they are added to Firebase
-            ref.child(snapshotUser.key()).on("child_added", function(snapshotChannel) {
-                var newChannel = snapshotChannel.val();
-                console.log("User "+ snapshotUser.key() +": Channel " + snapshotChannel.key());
-                ref.child(snapshotUser.key()+"/"+ snapshotChannel.key()).on("child_added", function(snapshotContent) {
-                   var newContent = snapshotContent.val();
-                  //console.log("User "+ snapshotUser.key() +": Channel " + snapshotChannel.key() + ": Content "+ newContent.content + " :Key " + snapshotContent.key() );
-
-                    $timeout(function() {
-                        var newUser = snapshotUser.val();
-                        console.log("Content -->"  + " " + newContent.content);
-                    });
-
-                    
-                });  
-            });
-
-           
-        });
-    
 
 
     contentsSrv.getAll($rootScope.email, 'mychannels').
@@ -95,13 +74,12 @@ angular.module('IpsumFE.Contents').controller('publishCtrl', function ($scope, $
             contentsSrv.getAll($rootScope.email, 'accountID').
             then(function (response) {
                     $scope.userid = response.data.Id;
-                    console.log("User ID " + $scope.userid);
+                    //console.log("User ID " + $scope.userid);
                     contentsSrv.getAll('', 'contentURL').
                     then(function (responseCh) {
                             fbURL = responseCh.data.url;
-                            console.log("--->" + fbURL);
                             fbRef = new Firebase("https://" + fbURL + "/channels/" + $scope.userid);
-                            mychannels = $firebase(fbRef);
+
                         },
                         function (error) {
                             alert('error', 'Loading channels', ' not possible to read channels ');
@@ -141,6 +119,38 @@ angular.module('IpsumFE.Contents').controller('publishCtrl', function ($scope, $
         });
     }
 
+    var stop;
+    var channelID;
 
+
+
+    function Refresh() {
+        if (angular.isDefined(stop)) return;
+        stop = $interval(function () {
+            if (fbRef != undefined) {
+                var mychannelstmp = [];
+                fbRef.on("child_added", function (snapshotContent) {
+                    $timeout(function () {
+                        var json = snapshotContent.val();
+                        for (var key in json) {
+                            // console.log('match!', key + " " + json[key]); // do stuff here!
+                            mychannelstmp.push({
+                                "key": key,
+                                "payload": json[key]
+                            });
+                        }
+                        $scope.mychannels = angular.copy(mychannelstmp);
+                    });
+                });
+
+            }
+        }, 2000);
+    };
+
+    $scope.$on('$destroy', function () {
+        $interval.cancel(stop);
+    });
+
+    Refresh();
 
 });
